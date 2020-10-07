@@ -190,7 +190,7 @@ void feat_t::compareBestMatch( const vector<feat_t>& l_one ) const
 
     for( auto r : l_one )
     {
-#if 0
+#if 1
         if( it == m )
         {
             cout << "desc dist " << *it++
