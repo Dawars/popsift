@@ -1,3 +1,10 @@
+if(NOT MSVC)
+      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+endif()
+set(CMAKE_CXX_STANDARD 11)
+
+add_executable(compareSiftFiles compareSiftFiles.cpp)
+
 configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/downloadOxfordDataset.sh.in
                 ${CMAKE_CURRENT_BINARY_DIR}/downloadOxfordDataset.sh )
 
