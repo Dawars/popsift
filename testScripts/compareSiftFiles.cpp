@@ -61,6 +61,7 @@ int main( int argc, char* argv[] )
     lines_read = readFeats( l_two, f_two );
     cerr << "Read " << lines_read << " lines from " << argv[2] << endl;
 
+#if 0
     for( auto l : l_one )
     {
         l.print( cout );
@@ -71,6 +72,7 @@ int main( int argc, char* argv[] )
         l.print( cout );
         cout << endl;
     }
+#endif
 
     for( auto l : l_one )
     {
@@ -188,6 +190,15 @@ void feat_t::compareBestMatch( const vector<feat_t>& l_one ) const
 
     for( auto r : l_one )
     {
+#if 0
+        if( it == m )
+        {
+            cout << "desc dist " << *it++
+                 << " pixdist=" << sqrtf( (x-r.x)*(x-r.x) + (y-r.y)*(y-r.y) )
+                 << " angledist=" << fabsf( ori/M_PI2*360.0f - r.ori/M_PI2*360.0f )
+                 << endl;
+        }
+#else
         cout << "desc dist " << *it;
         if( it == m )
              cout << " MIN ";
@@ -197,6 +208,7 @@ void feat_t::compareBestMatch( const vector<feat_t>& l_one ) const
         cout << " pixdist=" << sqrtf( (x-r.x)*(x-r.x) + (y-r.y)*(y-r.y) )
              << " angledist=" << fabsf( ori/M_PI2*360.0f - r.ori/M_PI2*360.0f )
              << endl;
+#endif
     }
 }
 
