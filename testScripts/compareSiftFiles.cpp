@@ -23,7 +23,7 @@ struct feat_t
 
     void print( ostream& ostr ) const;
 
-    void compareBestMatch( const vector<feat_t>& r ) const;
+    void compareBestMatch( const vector<feat_t>& r, bool minOnly ) const;
 
 private:
     float dist( const feat_t& r ) const;
@@ -76,7 +76,7 @@ int main( int argc, char* argv[] )
 
     for( auto l : l_one )
     {
-        l.compareBestMatch( l_two );
+        l.compareBestMatch( l_two, true );
     }
 }
 
@@ -172,12 +172,12 @@ void feat_t::print( ostream& ostr ) const
     }
 }
 
-void feat_t::compareBestMatch( const vector<feat_t>& l_one ) const
+void feat_t::compareBestMatch( const vector<feat_t>& l_one, bool minOnly ) const
 {
     vector<float> distances;
     distances.reserve( l_one.size() );
 
-    cout << "==========" << endl;
+    if( !minOnly ) cout << "==========" << endl;
     for( auto r : l_one )
     {
         float v = dist( r );
@@ -190,25 +190,29 @@ void feat_t::compareBestMatch( const vector<feat_t>& l_one ) const
 
     for( auto r : l_one )
     {
-#if 1
-        if( it == m )
+        if( minOnly )
         {
-            cout << "desc dist " << *it++
-                 << " pixdist=" << sqrtf( (x-r.x)*(x-r.x) + (y-r.y)*(y-r.y) )
-                 << " angledist=" << fabsf( ori/M_PI2*360.0f - r.ori/M_PI2*360.0f )
-                 << endl;
+            if( it == m )
+            {
+                cout << "desc dist " << *it
+                    << " pixdist=" << sqrtf( (x-r.x)*(x-r.x) + (y-r.y)*(y-r.y) )
+                    << " angledist=" << fabsf( ori/M_PI2*360.0f - r.ori/M_PI2*360.0f )
+                    << endl;
+            }
+            it++;
         }
-#else
-        cout << "desc dist " << *it;
-        if( it == m )
-             cout << " MIN ";
         else
-             cout << "     ";
-        it++;
-        cout << " pixdist=" << sqrtf( (x-r.x)*(x-r.x) + (y-r.y)*(y-r.y) )
-             << " angledist=" << fabsf( ori/M_PI2*360.0f - r.ori/M_PI2*360.0f )
-             << endl;
-#endif
+        {
+            cout << "desc dist " << *it;
+            if( it == m )
+                cout << " MIN ";
+            else
+                cout << "     ";
+            it++;
+            cout << " pixdist=" << sqrtf( (x-r.x)*(x-r.x) + (y-r.y)*(y-r.y) )
+                << " angledist=" << fabsf( ori/M_PI2*360.0f - r.ori/M_PI2*360.0f )
+                << endl;
+        }
     }
 }
 
